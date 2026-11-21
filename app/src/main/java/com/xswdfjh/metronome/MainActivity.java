@@ -88,17 +88,20 @@ public class MainActivity extends AppCompatActivity {
         btnPlay.setOnClickListener(v -> togglePlay());
         btnExit.setOnClickListener(v -> exitApp());
 
-        String[] timeSigs = {"4/4 拍", "3/4 拍", "2/4 拍"};
+        String[] timeSigs = {"4/4 拍", "3/4 拍", "2/4 拍", "6/8 拍", "3/8 拍", "12/8 拍"};
         ArrayAdapter<String> adapterTime = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, timeSigs);
         adapterTime.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTimeSig.setAdapter(adapterTime);
         spinnerTimeSig.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) beatsPerMeasure = 4;
-                else if (position == 1) beatsPerMeasure = 3;
-                else beatsPerMeasure = 2;
-                currentBeat = 0;
-            }
+                switch (position) {
+                    case 0: beatsPerMeasure = 4; break;
+                    case 1: beatsPerMeasure = 3; break;
+                    case 2: beatsPerMeasure = 2; break;
+                    case 3: beatsPerMeasure = 6; break;
+                    case 4: beatsPerMeasure = 3; break;
+                    case 5: beatsPerMeasure = 12; break;
+                }
             @Override public void onNothingSelected(AdapterView<?> parent) {}
         });
 
