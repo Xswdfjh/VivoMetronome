@@ -8,12 +8,13 @@
     android:padding="20dp">
 
     <!-- 封面图片 -->
-    <ImageView
-        android:id="@+id/imgCover"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@android:drawable/ic_media_play"
-        android:layout_marginBottom="20dp"/>
+    < <ImageView
+     android:id="@+id/imgCover"
+     android:layout_width="120dp"
+     android:layout_height="120dp"
+     android:src="@drawable/cover"
+     android:scaleType="centerCrop"
+     android:layout_marginBottom="20dp"/>
 
     <!-- BPM 显示 -->
     <TextView
