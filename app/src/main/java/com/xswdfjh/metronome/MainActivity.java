@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -30,12 +31,13 @@ public class MainActivity extends AppCompatActivity {
     private Button btnPlay, btnPlus, btnMinus, btnExit;
     private Spinner spinnerTimeSig, spinnerSound;
     private Switch switchFlash;
+    private ImageView imgCover;
 
     private int bpm = 60;
     private boolean isPlaying = false;
     private int currentBeat = 0;
     private int beatsPerMeasure = 4;
-    private String soundMode = "voice";
+    private String soundMode = "voice"; // 默认女声
     private boolean isFlashOn = false;
 
     private Handler handler = new Handler(Looper.getMainLooper());
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerTimeSig = findViewById(R.id.spinnerTimeSig);
         spinnerSound = findViewById(R.id.spinnerSound);
         switchFlash = findViewById(R.id.switchFlash);
+        imgCover = findViewById(R.id.imgCover); 
 
         seekBarBpm.setMax(60);
         seekBarBpm.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -88,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         btnPlay.setOnClickListener(v -> togglePlay());
         btnExit.setOnClickListener(v -> exitApp());
 
-        // 1. 拍号列表
+        // 拍号
         String[] timeSigs = {"4/4 拍", "3/4 拍", "2/4 拍", "6/8 拍", "3/8 拍", "12/8 拍"};
         ArrayAdapter<String> adapterTime = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, timeSigs);
         adapterTime.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -107,12 +110,13 @@ public class MainActivity extends AppCompatActivity {
             @Override public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        // 2. 音色选择
+        // 音色
         String[] soundTypes = {"清脆木鱼", "温柔女声"};
         ArrayAdapter<String> adapterSound = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, soundTypes);
         adapterSound.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSound.setAdapter(adapterSound);
-        spinnerSound.setSelection(1);
+        spinnerSound.setSelection(1); // 默认选中女声
+
         spinnerSound.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 soundMode = (position == 0) ? "woodblock" : "voice";
@@ -189,6 +193,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 if (!isPlaying) return;
 
+                // 触发图片动画
+                animateCoverImage();
+
                 if ("woodblock".equals(soundMode)) {
                     if (currentBeat == 0) {
                         woodblockTrackAccent.stop();
@@ -219,6 +226,23 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
+    // 动画逻辑
+    private void animateCoverImage() {
+        if (imgCover != null) {
+            imgCover.animate()
+                    .scaleX(1.2f)
+                    .scaleY(1.2f)
+                    .setDuration(60)
+                    .withEndAction(new Runnable() {
+                        @Override
+                        public void run() {
+                            imgCover.animate().scaleX(1.0f).scaleY(1.0f).setDuration(120).start();
+                        }
+                    })
+                    .start();
+        }
+    }
+
     private void flashLight() {
         if (cameraManager == null || cameraId == null) return;
         try {
@@ -235,6 +259,11 @@ public class MainActivity extends AppCompatActivity {
             btnPlay.setText("开始"); currentBeat = 0;
             if (tts != null) tts.stop();
             if (wakeLock != null && wakeLock.isHeld()) wakeLock.release();
+            
+            if (imgCover != null) {
+                imgCover.setScaleX(1.0f);
+                imgCover.setScaleY(1.0f);
+            }
         } else {
             isPlaying = true; btnPlay.setText("停止"); currentBeat = 0;
             if (wakeLock != null) wakeLock.acquire();
