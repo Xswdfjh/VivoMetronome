@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isPlaying = false;
     private int currentBeat = 0;
     private int beatsPerMeasure = 4;
-    private String soundMode = "woodblock";
+    private String soundMode = "voice";
     private boolean isFlashOn = false;
 
     private Handler handler = new Handler(Looper.getMainLooper());
@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapterSound = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, soundTypes);
         adapterSound.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSound.setAdapter(adapterSound);
+        spinnerSound.setSelection(1);
         spinnerSound.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 soundMode = (position == 0) ? "woodblock" : "voice";
