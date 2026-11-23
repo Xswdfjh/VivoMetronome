@@ -10,8 +10,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@android:drawable/ic_media_play"
-        android:label="木鱼节拍器"
+        android:icon="@drawable/cover"
+        android:label="节拍器"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         
         <!-- 注册主界面 -->
