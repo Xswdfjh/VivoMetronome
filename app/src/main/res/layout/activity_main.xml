@@ -7,16 +7,14 @@
     android:background="#FAFAFA"
     android:padding="20dp">
 
-    <!-- 封面图片 -->
-    < <ImageView
-     android:id="@+id/imgCover"
-     android:layout_width="120dp"
-     android:layout_height="120dp"
-     android:src="@drawable/cover"
-     android:scaleType="centerCrop"
-     android:layout_marginBottom="20dp"/>
+    <ImageView
+        android:id="@+id/imgCover"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/cover"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="20dp"/>
 
-    <!-- BPM 显示 -->
     <TextView
         android:id="@+id/tvBpm"
         android:layout_width="wrap_content"
@@ -26,7 +24,6 @@
         android:textStyle="bold"
         android:textColor="#333333"/>
 
-    <!-- 加减和开始按钮 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,7 +61,6 @@
             android:textColor="#FFFFFF"/>
     </LinearLayout>
 
-    <!-- 滑动条 -->
     <SeekBar
         android:id="@+id/seekBarBpm"
         android:layout_width="match_parent"
@@ -75,7 +71,6 @@
         android:progressTint="#E65100"
         android:thumbTint="#E65100"/>
 
-    <!-- 拍号与音色选择 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -101,7 +96,6 @@
             android:background="#EEEEEE"/>
     </LinearLayout>
 
-    <!-- 闪光灯开关 -->
     <Switch
         android:id="@+id/switchFlash"
         android:layout_width="wrap_content"
@@ -111,7 +105,6 @@
         android:layout_marginTop="20dp"
         android:textColor="#333333"/>
 
-    <!-- 新增：退出按钮 (灰色，与其他按钮区分开) -->
     <Button
         android:id="@+id/btnExit"
         android:layout_width="120dp"
