@@ -88,23 +88,26 @@ public class MainActivity extends AppCompatActivity {
         btnPlay.setOnClickListener(v -> togglePlay());
         btnExit.setOnClickListener(v -> exitApp());
 
+        // 1. 拍号列表
         String[] timeSigs = {"4/4 拍", "3/4 拍", "2/4 拍", "6/8 拍", "3/8 拍", "12/8 拍"};
         ArrayAdapter<String> adapterTime = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, timeSigs);
         adapterTime.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTimeSig.setAdapter(adapterTime);
         spinnerTimeSig.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0: beatsPerMeasure = 4; break;
-                    case 1: beatsPerMeasure = 3; break;
-                    case 2: beatsPerMeasure = 2; break;
-                    case 3: beatsPerMeasure = 6; break;
-                    case 4: beatsPerMeasure = 3; break;
-                    case 5: beatsPerMeasure = 12; break;
-                }
+            @Override 
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) beatsPerMeasure = 4;
+                else if (position == 1) beatsPerMeasure = 3;
+                else if (position == 2) beatsPerMeasure = 2;
+                else if (position == 3) beatsPerMeasure = 6;
+                else if (position == 4) beatsPerMeasure = 3;
+                else if (position == 5) beatsPerMeasure = 12;
+                currentBeat = 0;
+            }
             @Override public void onNothingSelected(AdapterView<?> parent) {}
         });
 
+        // 2. 音色选择
         String[] soundTypes = {"清脆木鱼", "温柔女声"};
         ArrayAdapter<String> adapterSound = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, soundTypes);
         adapterSound.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -197,8 +200,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else {
                     if (tts != null) {
-                        String[] cnNums = {"一", "二", "三", "四"};
-                        tts.speak(cnNums[currentBeat], TextToSpeech.QUEUE_FLUSH, null, "Beat");
+                        String[] cnNums = {"一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"};
+                        int safeIndex = currentBeat % cnNums.length;
+                        tts.speak(cnNums[safeIndex], TextToSpeech.QUEUE_FLUSH, null, "Beat");
                     }
                 }
 
